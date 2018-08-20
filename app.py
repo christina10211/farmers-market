@@ -19,7 +19,9 @@ class Market(db.Model):
 
 @app.route("/")
 def hello():
-  return "Your Ultimate Guide to Farmers Market!"
+  markets = Market.query.all()
+  return render_template("list.html", markets = markets)
+
 
 @app.route("/markets/")
 def markets():
