@@ -1,0 +1,54 @@
+
+
+
+{% extends 'layout.html' %}
+
+{% block content %}
+
+<div class="jumbotron">
+  <h1 class="display-4">{{ market.MarketName }}</h1>
+  <p class="lead">{{ market.street }}, {{ market.city }}, {{ market.state }} {{ market.zip }}</p>
+</div>
+
+<div class="row mb-5">
+  <div class="col-5">
+    <h3>Market Information</h3>
+    <p>SNAP: {{ market.SNAP}}</p>
+    <p>Credit Card: {{ market.Credit }}</p>
+    <p>Website: {{ market.Website }}</p>
+    <p><a class="btn btn-warning">Contact us</a></p>
+  </div>
+  <div class="col-7">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.3/dist/leaflet.css"
+   integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ=="
+   crossorigin=""/>
+ <!-- Make sure you put this AFTER Leaflet's CSS -->
+ <script src="https://unpkg.com/leaflet@1.3.3/dist/leaflet.js"
+   integrity="sha512-tAGcCfR4Sc5ZP5ZoVz0quoZDYX5aCtEm/eu1KhSLj2c9eFrylXZknQYmxUssFaVJKvvc0dJQixhGjG2yXWiV9Q=="
+   crossorigin=""></script>
+ <div id="mapid"></div>
+  <style>
+  #mapid { height: 400px; }
+  </style>
+<script>
+  var map = L.map('mapid').setView([{{ market.y }}, {{ market.x }}], 11);
+L.tileLayer('https://korona.geog.uni-heidelberg.de/tiles/roads/x={x}&y={y}&z={z}', {
+  attribution: 'Imagery from <a href="http://giscience.uni-hd.de/">GIScience Research Group @ University of Heidelberg</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+  subdomains: 'abcd',
+  minZoom: 15,
+  maxZoom: 30,
+  ext: 'png'
+}).addTo(map)
+
+
+
+var marker = L.marker([{{ market.y }}, {{ market.x }}]).addTo(map);
+marker.bindPopup("{{ market.MarketName }}").openPopup();
+</script>
+
+
+
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+  <p>This will be a list of farmers markets</p>
+  <ul>
+    {% for market in markets %}
+       <li><a href="{{ url_for('market', FMID=market.FMID) }}">{{ market.MarketName }}</a></li>
+    {% endfor %}
+  </ul>
+{% endblock %}
+
+
